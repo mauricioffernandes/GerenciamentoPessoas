@@ -1,5 +1,6 @@
 package com.apla77.gerenciamento.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,18 +13,15 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String logradouro;
-
     private String cep;
-
     private int numero;
-
     private String cidade;
-
     private String estado;
+    private boolean principal;
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id", nullable = false)
+    @JsonBackReference
     private Pessoa pessoa;
 }

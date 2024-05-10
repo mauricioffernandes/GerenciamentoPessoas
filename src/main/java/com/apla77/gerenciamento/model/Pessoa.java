@@ -1,5 +1,6 @@
 package com.apla77.gerenciamento.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,5 +21,6 @@ public class Pessoa {
     private String dataNascimento;
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
-    private List<Endereco> enderecos;
+    @JsonManagedReference
+    private List<Endereco> enderecos = null;
 }

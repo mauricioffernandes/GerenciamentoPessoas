@@ -1,9 +1,8 @@
 package com.apla77.gerenciamento.service;
 
-import com.apla77.gerenciamento.model.Endereco;
+import com.apla77.gerenciamento.exception.ConsultaNotFoundException;
 import com.apla77.gerenciamento.model.Pessoa;
 import com.apla77.gerenciamento.repository.PessoaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,40 +10,31 @@ import java.util.List;
 @Service
 public class PessoaService {
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
 
-    public Pessoa criarPessoa(Pessoa pessoa) {
-        // Implementação da lógica para criar uma pessoa
+    private final PessoaRepository pessoaRepository;
+
+    public PessoaService(PessoaRepository pessoaRepository) {
+        this.pessoaRepository = pessoaRepository;
+    }
+
+    public Pessoa create(Pessoa pessoa) {
         return pessoaRepository.save(pessoa);
     }
 
-    public Pessoa editarPessoa(Long id, Pessoa pessoa) {
-        // Implementação da lógica para editar uma pessoa
+    public Pessoa editarPessoa(Pessoa pessoa) {
+        if(pessoa.getId() == null) {
+            throw new RuntimeException("Id da pessoa não informado");
+        }
         return pessoaRepository.save(pessoa);
     }
 
     public Pessoa consultarPessoa(Long id) {
-        // Implementação da lógica para consultar uma pessoa
-        return pessoaRepository.findById(id).orElse(null);
+        return pessoaRepository.findById(id).orElseThrow(() -> new ConsultaNotFoundException(
+                "Pessoa não encontrada, ID: " + id)
+        );
     }
 
-    public Endereco criarEndereco(Long idPessoa, Endereco endereco) {
-        // Implementação da lógica para criar um endereço para uma pessoa
-        return endereco;
-    }
-
-    public Endereco editarEndereco(Long idPessoa, Long idEndereco, Endereco endereco) {
-        // Implementação da lógica para editar um endereço de uma pessoa
-        return endereco;
-    }
-
-    public List<Endereco> consultarEnderecos(Long id) {
-        // Implementação da lógica para consultar os endereços de uma pessoa
-        return null;
-    }
-
-    public void indicarEnderecoPrincipal(Long idPessoa, Long idEndereco) {
-        // Implementação da lógica para indicar o endereço principal de uma pessoa
+    public List<Pessoa> consultarPessoas() {
+        return pessoaRepository.findAll();
     }
 }
