@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,7 +106,7 @@ class EnderecoControllerTest {
 
     @Test
     public void testIndicarEnderecoPrincipal() {
-        doNothing().when(enderecoService).indicarEnderecoPrincipal(1L, 1L);
+        Mockito.doNothing().when(enderecoService).indicarEnderecoPrincipal(1L, 1L);
         ResponseEntity<String> response = enderecoController.indicarEnderecoPrincipal(1L, 1L);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Endereço principal indicado com sucesso.", response.getBody());
