@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 class PessoaServiceTest {
@@ -37,10 +39,26 @@ class PessoaServiceTest {
     }
 
     @Test
+    public void testCreateFalhaNaCriacao() {
+        Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
+        doThrow(new RuntimeException("Erro na criação")).when(pessoaRepository).save(any(Pessoa.class));
+        Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.create(pessoa));
+        assertEquals("Erro na criação", exception.getMessage());
+    }
+
+    @Test
     public void testEditarPessoa() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
         when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
         assertEquals(pessoa, pessoaService.editarPessoa(pessoa));
+    }
+
+    @Test
+    public void testEditarPessoaFalhaNaEdicao() {
+        Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
+        doThrow(new RuntimeException("Erro na edição")).when(pessoaRepository).save(any(Pessoa.class));
+        Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.editarPessoa(pessoa));
+        assertEquals("Erro na edição", exception.getMessage());
     }
 
     @Test
@@ -58,6 +76,13 @@ class PessoaServiceTest {
     }
 
     @Test
+    public void testConsultarPessoaFalhaNaConsulta() {
+        doThrow(new RuntimeException("Erro na consulta")).when(pessoaRepository).findById(1L);
+        Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.consultarPessoa(1L));
+        assertEquals("Erro na consulta", exception.getMessage());
+    }
+
+    @Test
     public void testConsultarPessoaNaoExistente() {
         when(pessoaRepository.findById(1L)).thenReturn(Optional.empty());
         assertThrows(ConsultaNotFoundException.class, () -> pessoaService.consultarPessoa(1L));
@@ -70,6 +95,13 @@ class PessoaServiceTest {
         List<Pessoa> pessoas = Arrays.asList(pessoa1, pessoa2);
         when(pessoaRepository.findAll()).thenReturn(pessoas);
         assertEquals(pessoas, pessoaService.consultarPessoas());
+    }
+
+    @Test
+    public void testConsultarPessoasFalhaNaConsulta() {
+        doThrow(new RuntimeException("Erro na consulta")).when(pessoaRepository).findAll();
+        Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.consultarPessoas());
+        assertEquals("Erro na consulta", exception.getMessage());
     }
 
 }

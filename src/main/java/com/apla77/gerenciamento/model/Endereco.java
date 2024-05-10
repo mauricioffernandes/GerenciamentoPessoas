@@ -2,10 +2,14 @@ package com.apla77.gerenciamento.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Endereco {
@@ -18,7 +22,7 @@ public class Endereco {
     private int numero;
     private String cidade;
     private String estado;
-    private boolean principal;
+    private boolean principal = true;
 
     @ManyToOne
     @JoinColumn(name = "pessoa_id", nullable = false)
