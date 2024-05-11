@@ -4,6 +4,7 @@ import com.apla77.gerenciamento.exception.ConsultaNotFoundException;
 import com.apla77.gerenciamento.model.Pessoa;
 import com.apla77.gerenciamento.repository.PessoaRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,6 +33,7 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de criação de pessoa com sucesso")
     public void testCreate() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
         when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
@@ -39,6 +41,7 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de criação de pessoa com id nulo e falha na criação")
     public void testCreateFalhaNaCriacao() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
         doThrow(new RuntimeException("Erro na criação")).when(pessoaRepository).save(any(Pessoa.class));
@@ -47,6 +50,7 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de edição de pessoa com sucesso")
     public void testEditarPessoa() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
         when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
@@ -54,6 +58,7 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de edição de pessoa com falha na edição")
     public void testEditarPessoaFalhaNaEdicao() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa 1", "01/01/2000", null);
         doThrow(new RuntimeException("Erro na edição")).when(pessoaRepository).save(any(Pessoa.class));
@@ -62,20 +67,22 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de edição de pessoa sem id com falha na edição")
     public void testEditarPessoaSemId() {
         Pessoa pessoa = new Pessoa();
         assertThrows(RuntimeException.class, () -> pessoaService.editarPessoa(pessoa));
     }
 
     @Test
+    @DisplayName("Teste de consulta de pessoa com sucesso")
     public void testConsultarPessoa() {
         Pessoa pessoa = new Pessoa(1L,"Pessoa", "01/01/2000", null);
-        pessoa.setId(1L);
         when(pessoaRepository.findById(1L)).thenReturn(Optional.of(pessoa));
         assertEquals(pessoa, pessoaService.consultarPessoa(1L));
     }
 
     @Test
+    @DisplayName("Teste de consulta de pessoa com falha na consulta")
     public void testConsultarPessoaFalhaNaConsulta() {
         doThrow(new RuntimeException("Erro na consulta")).when(pessoaRepository).findById(1L);
         Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.consultarPessoa(1L));
@@ -83,12 +90,14 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste com falha de consulta de pessoa não existente")
     public void testConsultarPessoaNaoExistente() {
         when(pessoaRepository.findById(1L)).thenReturn(Optional.empty());
         assertThrows(ConsultaNotFoundException.class, () -> pessoaService.consultarPessoa(1L));
     }
 
     @Test
+    @DisplayName("Teste de consulta de pessoas com sucesso")
     public void testConsultarPessoas() {
         Pessoa pessoa1 = new Pessoa(1L, "Pessoa 1", "01/01/2000", null);
         Pessoa pessoa2 = new Pessoa(2L, "Pessoa 2", "02/02/2000", null);
@@ -98,10 +107,10 @@ class PessoaServiceTest {
     }
 
     @Test
+    @DisplayName("Teste de consulta de pessoas com falha na consulta")
     public void testConsultarPessoasFalhaNaConsulta() {
         doThrow(new RuntimeException("Erro na consulta")).when(pessoaRepository).findAll();
         Exception exception = assertThrows(RuntimeException.class, () -> pessoaService.consultarPessoas());
         assertEquals("Erro na consulta", exception.getMessage());
     }
-
 }

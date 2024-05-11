@@ -35,9 +35,9 @@ public class EnderecoController {
 
     @GetMapping("/{id}")
     @ApiOperation("Find a endereço by it's id")
-    public ResponseEntity<List<Endereco>> consultarEndereco(@PathVariable Long id) {
-        List<Endereco> enderecos = enderecoService.consultarEnderecos(id);
-        return ResponseEntity.ok().body(enderecos);
+    public ResponseEntity<Endereco> consultarEndereco(@PathVariable Long id) {
+        Endereco endereco = enderecoService.consultarEndereco(id);
+        return ResponseEntity.ok().body(endereco);
     }
 
     @GetMapping("")
@@ -54,7 +54,7 @@ public class EnderecoController {
     }
 
     @ExceptionHandler(ConsultaNotFoundException.class)
-    public ResponseEntity<String> handlePessoaNotFoundException(ConsultaNotFoundException ex) {
+    public ResponseEntity<String> handleEnderecoNotFoundException(ConsultaNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }

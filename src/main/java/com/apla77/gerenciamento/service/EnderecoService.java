@@ -27,8 +27,8 @@ public class EnderecoService {
         return enderecoRepository.save(endereco);
     }
 
-    public List<Endereco> consultarEnderecos(Long id) {
-        return (List<Endereco>) enderecoRepository.findById(id).orElseThrow(() -> new ConsultaNotFoundException(
+    public Endereco consultarEndereco(Long id) {
+        return enderecoRepository.findById(id).orElseThrow(() -> new ConsultaNotFoundException(
                 "Endereco não encontrada, ID: " + id)
         );
     }
