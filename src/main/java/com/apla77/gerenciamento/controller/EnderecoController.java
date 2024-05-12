@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/endereco")
+@RequestMapping(value = "/v1/endereco")
 @Api(value = "ENDERECO API REST")
 @CrossOrigin(origins = "*")
 public class EnderecoController {

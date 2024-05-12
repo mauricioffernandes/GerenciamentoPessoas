@@ -77,5 +77,5 @@ Os testes unitários foram implementados utilizando JUnit 5 e Mockito, além do 
 Para consumir a API, basta acessar o Swagger através da URL `http://localhost:8081/swagger-ui.html`.
 
 Ou se preferir, pode utilizar o Insomnia ou Postman para realizar as requisições Get, Post e Put para:
-- http://localhost:8081/pessoa  
-- http://localhost:8081/endereco 
+- http://localhost:8081/v1/pessoa  
+- http://localhost:8081/v1/endereco 

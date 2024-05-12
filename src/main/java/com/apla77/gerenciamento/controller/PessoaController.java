@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pessoa")
+@RequestMapping("/v1/pessoa")
 @Api(value = "PESSOA API REST")
 @CrossOrigin(origins = "*")
 public class PessoaController {
