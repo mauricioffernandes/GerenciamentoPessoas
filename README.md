@@ -4,9 +4,9 @@
 
 ---
 O projeto tem como objetivo a realização da gerenciamento de pessoas via API Rest, que consiste nos CRUD's de Pessoa e Endereço.
-É utilizado objetos JSON, para a realização das consistências em banco em memória (H@).
+É utilizado objetos JSON, para a realização das consistências em banco em memória (H2).
 
-O projeto também comta com o uso do Sweggar para realizar os testes na api caso queira uma outra opção além do Insonmia ou Postman. 
+O projeto também conta com o uso do Sweggar para realizar os testes na api, além das opções do Insonmia ou Postman. 
 
 
 ### Tabela de conteúdos
@@ -77,4 +77,5 @@ Os testes unitários foram implementados utilizando JUnit 5 e Mockito, além do 
 Para consumir a API, basta acessar o Swagger através da URL `http://localhost:8081/swagger-ui.html`.
 
 Ou se preferir, pode utilizar o Insomnia ou Postman para realizar as requisições Get, Post e Put para:
-http://localhost:8081/pessoa  http://localhost:8081/endereco 
+- http://localhost:8081/pessoa  
+- http://localhost:8081/endereco 
